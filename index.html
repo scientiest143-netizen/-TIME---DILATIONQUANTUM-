@@ -14,6 +14,8 @@
         .mic-control { background: #111; border: 1px solid #333; padding: 10px 20px; border-radius: 5px; display: inline-flex; align-items: center; gap: 15px; margin-bottom: 25px; }
         .mic-control input { width: 120px; cursor: pointer; accent-color: var(--danger); }
         .stat-label { color: var(--neon); font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .red-label { color: var(--danger) !important; }
 
         .primary-layout { 
             display: flex; 
@@ -37,65 +39,63 @@
             min-width: 280px;
         }
 
-        .noise-bar {
-            max-width: 600px;
-            margin: 25px auto;
-            background: #0a0c10;
-            border: 1px solid var(--neon);
-            padding: 10px 30px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
+        /* Enhanced 3D Bloch Sphere Styles */
+        #bloch-stage { height: 140px; perspective: 1000px; display: flex; align-items: center; justify-content: center; }
+        .sphere { 
+            width: 90px; height: 90px; 
+            border: 1px solid rgba(0, 255, 204, 0.3); 
+            border-radius: 50%; 
+            position: relative; 
+            transform-style: preserve-3d; 
+            transition: transform 0.1s linear; 
         }
-
-        .meter-container { height: 15px; width: 200px; background: #000; border: 1px solid #333; position: relative; border-radius: 10px; overflow: hidden; }
-        #fill { position: absolute; left: 0; height: 100%; background: var(--neon); box-shadow: 0 0 10px var(--neon); transition: width 0.1s; width: 0%; }
-
-        #rpm-val { font-size: 3rem; font-weight: bold; color: #fff; margin: 5px 0; font-family: 'Courier New'; text-shadow: 0 0 10px #fff; }
-
-        #bloch-stage { height: 120px; perspective: 1000px; display: flex; align-items: center; justify-content: center; }
-        .sphere { width: 90px; height: 90px; border: 1px solid rgba(0, 255, 204, 0.6); border-radius: 50%; position: relative; transform-style: preserve-3d; transition: transform 0.1s linear; }
-        .needle { width: 3px; height: 45px; background: var(--gold); position: absolute; left: 43.5px; top: 0; transform-origin: bottom; box-shadow: 0 0 15px var(--gold); }
+        .sphere::before, .sphere::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 50%; border: 1px solid rgba(0, 255, 204, 0.2);
+        }
+        .sphere::before { transform: rotateY(90deg); }
+        .sphere::after { transform: rotateX(90deg); border-style: dashed; }
+        
+        .needle { 
+            width: 3px; height: 45px; 
+            background: linear-gradient(to top, var(--gold), transparent); 
+            position: absolute; left: 43.5px; top: 0; 
+            transform-origin: bottom; 
+            box-shadow: 0 0 15px var(--gold); 
+        }
 
         .clock-wrap { width: 100%; text-align: left; background: rgba(0,0,0,0.4); padding: 12px; border-radius: 8px; border-left: 4px solid var(--neon); margin-bottom: 10px; }
         .clock { font-size: 2.2rem; font-weight: bold; color: #fff; font-family: 'Courier New'; }
         
         #wave-canvas { width: 100%; height: 120px; background: rgba(0,0,0,0.6); border-radius: 8px; border: 1px solid #222; margin-top: 10px; }
 
+        /* Updated Table Section */
         .data-table-section { 
-            width: 95%; 
-            max-width: 1100px; 
-            background: rgba(15, 18, 24, 0.8); 
-            backdrop-filter: blur(10px);
-            border: 1px solid #444; 
-            padding: 20px; 
-            border-radius: 15px; 
-            margin: 30px auto; 
-            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+            width: 95%; max-width: 1100px; 
+            background: rgba(15, 18, 24, 0.8); backdrop-filter: blur(10px);
+            border: 1px solid #444; padding: 20px; border-radius: 15px; 
+            margin: 30px auto; box-shadow: 0 0 40px rgba(0,0,0,0.8);
             overflow-x: auto;
         }
         table { width: 100%; border-collapse: separate; border-spacing: 0 8px; text-align: left; min-width: 600px; }
         th { color: var(--gold); padding: 12px; text-transform: uppercase; font-size: 11px; letter-spacing: 2px; border-bottom: 1px solid #333; }
         td { padding: 15px 12px; background: rgba(255,255,255,0.03); font-family: 'Courier New'; font-size: 1rem; color: #fff; }
         td:first-child { border-radius: 8px 0 0 8px; border-left: 2px solid var(--gold); }
-        td:last-child { border-radius: 0 8px 8px 0; }
+        
+        .noise-bar {
+            max-width: 600px; margin: 25px auto; background: #0a0c10;
+            border: 1px solid var(--neon); padding: 10px 30px; border-radius: 50px;
+            display: flex; align-items: center; justify-content: center; gap: 20px;
+        }
+        .meter-container { height: 15px; width: 200px; background: #000; border: 1px solid #333; position: relative; border-radius: 10px; overflow: hidden; }
+        #fill { position: absolute; left: 0; height: 100%; background: var(--neon); box-shadow: 0 0 10px var(--neon); transition: width 0.1s; width: 0%; }
 
-        .btn-container { margin-top: 20px; }
+        #rpm-val { font-size: 3rem; font-weight: bold; color: #fff; margin: 5px 0; font-family: 'Courier New'; text-shadow: 0 0 10px #fff; }
+
         #start-btn { 
-            background: var(--danger); 
-            color: #fff; 
-            padding: 18px 70px; 
-            border-radius: 50px; 
-            font-weight: bold; 
-            cursor: pointer; 
-            border: none; 
-            font-size: 1.2rem; 
-            letter-spacing: 4px;
-            transition: all 0.4s ease;
-            box-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
-            text-transform: uppercase;
+            background: var(--danger); color: #fff; padding: 18px 70px; border-radius: 50px; 
+            font-weight: bold; cursor: pointer; border: none; font-size: 1.2rem; letter-spacing: 4px;
+            transition: all 0.4s ease; box-shadow: 0 0 15px rgba(255, 51, 102, 0.4); text-transform: uppercase;
         }
         #start-btn.active { background: #1a1a1a; color: var(--neon); border: 1px solid var(--neon); box-shadow: 0 0 30px var(--neon); }
 
@@ -108,14 +108,14 @@
     <div class="main-title">QUANTUM TIME OBSERVATION ON TIME - DILATION WITH WAVE - PARTICLE DUALITY</div>
 
     <div class="mic-control">
-        <span class="stat-label">TELEMETRY GAIN</span>
+        <span class="stat-label">OUTPUT GAIN</span>
         <input type="range" id="sens-knob" min="0.5" max="10.0" step="0.1" value="2.0" oninput="document.getElementById('sens-val').innerText = this.value + 'x'">
         <span id="sens-val" style="color:var(--danger); font-weight:bold;">2.0x</span>
     </div>
 
     <div class="primary-layout">
         <div class="card">
-            <span class="stat-label">ANGULAR VELOCITY (KMPH)</span>
+            <span class="stat-label" style="font-size: 12px; margin-bottom: 5px;">ANGULAR VELOCITY <span class="red-label">(10<sup>6</sup> m/s)</span></span>
             <div id="rpm-val">000</div>
             <div id="bloch-stage">
                 <div class="sphere" id="sphere"><div class="needle" id="needle"></div></div>
@@ -124,9 +124,9 @@
         </div>
 
         <div class="card">
-            <span class="stat-label">TIME - DILATION (SECONDS)</span>
+            <span class="stat-label">TIME - DILATION <span class="red-label">(SECONDS)</span></span>
             <div class="clock-wrap">
-                <small style="color:var(--neon)">REAL TIME</small>
+                <small style="color:var(--neon)">ABSOLUTE TIME</small>
                 <div class="clock" id="et">0.00</div>
             </div>
             <div class="clock-wrap" style="border-left-color:var(--gold)">
@@ -144,31 +144,31 @@
     </div>
 
     <div class="noise-bar">
-        <span class="stat-label">ENVIRONMENTAL NOISE</span>
+        <span class="stat-label">SYSTEM NOISE</span>
         <div class="meter-container"><div id="fill"></div></div>
         <div id="db-label" style="font-size:1.1rem; font-weight:bold; color:var(--neon); min-width: 40px;">0%</div>
     </div>
 
     <div class="data-table-section">
-        <span class="stat-label" style="margin-bottom: 15px; display: block; font-size: 12px;">COMPARATIVE TEMPORAL ANALYSIS REPORT</span>
+        <span class="stat-label" style="margin-bottom: 15px; display: block; font-size: 12px;">COMPARATIVE SYSTEM STATUS & TIME DILATION</span>
         <table>
             <thead>
                 <tr>
-                    <th>OBSERVATION POINT</th>
+                    <th>TIME OBSERVATION</th>
                     <th>LIVE CLOCK</th>
                     <th>SYSTEM STATUS</th>
-                    <th>DILATION OFFSET</th>
+                    <th>TIME DILATION</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>CLASSICAL TIME OBSERVATION</td>
+                    <td>ABSOLUTE TIME</td>
                     <td id="table-et">0.00s</td>
                     <td style="color: var(--neon); letter-spacing: 1px;">STATIONARY</td>
                     <td>+0.00s</td>
                 </tr>
                 <tr>
-                    <td>QUANTUM TIME OBSERVATION</td>
+                    <td>RELATIVE TIME</td>
                     <td id="table-st">0.00s</td>
                     <td id="table-status" style="color: var(--gold); letter-spacing: 1px;">IDLE</td>
                     <td id="table-diff" class="diff-text" style="color: var(--danger);">+0.00s</td>
@@ -189,7 +189,6 @@
         const canvas = document.getElementById('wave-canvas');
         const ctx = canvas.getContext('2d');
 
-        // Ensure canvas is sized correctly on load
         function resize() {
             canvas.width = canvas.clientWidth;
             canvas.height = canvas.clientHeight;
@@ -208,7 +207,7 @@
                     source.connect(analyser);
                     data = new Uint8Array(analyser.frequencyBinCount);
                 } catch (err) {
-                    alert("Microphone access is required for quantum observation.");
+                    alert("Microphone access is required.");
                     return;
                 }
             }
@@ -222,13 +221,15 @@
             if (active) {
                 if (audioCtx.state === 'suspended') audioCtx.resume();
                 loop();
+            } else {
+                drawDuality(0);
             }
         }
 
         function drawDuality(signal) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
             if (active) {
+                // Real-time 3D Sine Wave
                 ctx.strokeStyle = '#00ffcc';
                 ctx.lineWidth = 3;
                 ctx.beginPath();
@@ -238,13 +239,12 @@
                 }
                 ctx.stroke();
             } else {
-                // Static Particle View
+                // Static Particle Points (Quantum Grain)
                 for (let i = 0; i < 30; i++) {
+                    const posX = (i * (canvas.width / 30)) + (canvas.width/60);
+                    const posY = canvas.height/2 + (Math.random() * 4 - 2); 
                     ctx.fillStyle = '#ffea00';
                     ctx.beginPath();
-                    // Seeded random-ish positions
-                    const posX = (i * (canvas.width / 30)) + 10;
-                    const posY = canvas.height/2 + (Math.sin(i) * 20);
                     ctx.arc(posX, posY, 3, 0, Math.PI * 2);
                     ctx.fill();
                 }
@@ -252,32 +252,24 @@
         }
 
         function loop() {
-            if (!active) { 
-                drawDuality(0); 
-                return; 
-            }
-            
+            if (!active) return;
             analyser.getByteFrequencyData(data);
             let sum = 0;
             for(let i = 0; i < data.length; i++) sum += data[i];
             let avg = sum / data.length;
             let signal = avg * parseFloat(document.getElementById('sens-knob').value);
             
-            // Update Noise Meter
             let noisePercent = Math.min(100, (signal / 120) * 100);
             document.getElementById('fill').style.width = noisePercent + '%';
             document.getElementById('db-label').innerText = Math.round(noisePercent) + '%';
 
-            // Update Velocity
             let rpm = signal > 10 ? Math.min(999, Math.floor(signal * 8)) : 0;
             document.getElementById('rpm-val').innerText = rpm.toString().padStart(3, '0');
 
-            // Calculate Dilation
             let factor = 1 + (rpm / 2000); 
             et += 0.016; 
             st += 0.016 * factor;
 
-            // UI Updates
             document.getElementById('et').innerText = et.toFixed(2);
             document.getElementById('st').innerText = st.toFixed(2);
             document.getElementById('warp-factor').innerText = "LORENTZ FACTOR: " + factor.toFixed(3);
@@ -287,15 +279,13 @@
             document.getElementById('table-diff').innerText = "+" + (st - et).toFixed(2) + "s";
             document.getElementById('table-status').innerText = rpm > 500 ? "HIGH VELOCITY" : (rpm > 10 ? "DILATING" : "IDLE");
 
-            // Animate Sphere
-            document.getElementById('sphere').style.transform = `rotateY(${(st * 50) % 360}deg) rotateX(${(rpm / 10)}deg)`;
+            // Update 3D Sphere Rotation
+            document.getElementById('sphere').style.transform = `rotateY(${(st * 100) % 360}deg) rotateX(${(rpm / 5) % 360}deg)`;
             document.getElementById('needle').style.transform = `rotate(${rpm}deg)`;
 
             drawDuality(signal);
             requestAnimationFrame(loop);
         }
-
-        // Initial draw for particle state
         drawDuality(0);
     </script>
 </body>
